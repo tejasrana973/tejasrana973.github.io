@@ -1,0 +1,459 @@
+/* 
+ * Academic Personal Website Stylesheet
+ * Minimal, accessible, near-monochrome design
+ * System fonts, max-width 900px
+ */
+
+/* Reset and Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.7;
+  color: #1a1a1a;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header & Navigation */
+header {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+}
+
+header .container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.site-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: #4a4a4a;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #4a4a4a;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+nav a:hover,
+nav a:focus {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+
+nav a[aria-current="page"] {
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+/* Main Content */
+main {
+  padding: 1rem 0 3rem;
+  min-height: calc(100vh - 200px);
+}
+
+/* Typography */
+h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #2a2a2a;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: #2a2a2a;
+}
+
+/* Links */
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+/* Home Page Specific */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 600px) {
+  .profile-section {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid #e5e5e5;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h1 {
+  margin-bottom: 0.5rem;
+}
+
+.profile-subtitle {
+  color: #6a6a6a;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* About Section */
+.about-text {
+  text-align: justify;
+}
+
+.about-text p {
+  margin-bottom: 1rem;
+}
+
+/* External Links */
+.external-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.external-links a {
+  color: #4a4a4a;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.external-links a:hover {
+  color: #1a1a1a;
+}
+
+/* CV Page */
+.cv-section {
+  margin-bottom: 2rem;
+}
+
+.cv-item {
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+}
+
+.cv-item-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 600px) {
+  .cv-item-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+.cv-item-title {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.cv-item-date {
+  color: #6a6a6a;
+  font-size: 0.9rem;
+}
+
+.cv-item-subtitle {
+  color: #4a4a4a;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.cv-item ul {
+  margin-left: 1.25rem;
+  color: #3a3a3a;
+}
+
+.cv-item li {
+  margin-bottom: 0.35rem;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  margin-left: 0;
+}
+
+.skills-list li {
+  background: #f5f5f5;
+  padding: 0.25rem 0.75rem;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  color: #3a3a3a;
+}
+
+.download-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  color: #2a2a2a;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.download-link:hover {
+  background: #eaeaea;
+  text-decoration: none;
+}
+
+/* Thesis Page */
+.thesis-status {
+  background: #f9f9f9;
+  border-left: 3px solid #6a6a6a;
+  padding: 0.75rem 1rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+  color: #5a5a5a;
+}
+
+.abstract {
+  background: #fafafa;
+  padding: 1.25rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.abstract h2 {
+  margin-top: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Math Display */
+.math-display {
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+/* Figures */
+figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+
+figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #5a5a5a;
+  text-align: left;
+  padding: 0 1rem;
+}
+
+/* Code/Data Section */
+.code-note {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+.code-note code {
+  background: #eaeaea;
+  padding: 0.1rem 0.3rem;
+  border-radius: 2px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85rem;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid #e5e5e5;
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: #6a6a6a;
+}
+
+@media (min-width: 600px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.contact-text {
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-links a {
+  color: #5a5a5a;
+  font-size: 0.85rem;
+}
+
+.footer-links a:hover {
+  color: #1a1a1a;
+}
+
+/* Publications List */
+.publication-list {
+  list-style: none;
+  margin-left: 0;
+}
+
+.publication-list li {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.publication-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #6a6a6a;
+}
+
+/* Accessibility */
+:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #1a1a1a;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Print Styles */
+@media print {
+  header, footer, nav {
+    display: none;
+  }
+  
+  main {
+    padding: 0;
+  }
+  
+  a {
+    color: #1a1a1a;
+  }
+  
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+}
