@@ -81,28 +81,6 @@ nav a[aria-current="page"] {
   font-weight: 500;
 }
 
-
-/* Brand Icons */
-/* Accessibility: visually-hide text but keep for screen readers */
-.sr-only{ position: absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-
-/* Icon baseline styles (used by Font Awesome icons or inline SVGs) */
-.social-icons { display:inline-flex; gap:0.6rem; align-items:center; }
-.icon-link { display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-size:1.25rem; transition: transform .12s ease, opacity .12s; color: inherit; }
-.icon-link:hover{ transform: translateY(-3px); opacity:0.9; }
-
-/* Icon sizing when <i> is used */
-.icon-link i { font-size: 1.25rem; line-height: 1; vertical-align: middle; }
-
-/* Brand colors */
-.icon-link.gmail { color: #D14836; }      /* Gmail red */
-.icon-link.linkedin { color: #0A66C2; }   /* LinkedIn blue */
-.icon-link.github { color: #181717; }     /* GitHub dark */
-
-/* Small helper used in other places */
-.contact-text .icon-link { margin-right:0.35rem; font-size:1rem; vertical-align:middle; }
-
-
 /* Main Content */
 main {
   padding: 1rem 0 3rem;
@@ -370,20 +348,79 @@ figcaption {
 }
 
 /* Footer */
+/* Accessibility: visually-hide text but keep for screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Icon baseline */
+.social-icons {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1.25rem;
+  transition: transform .12s ease, opacity .12s;
+  color: inherit;
+}
+
+.icon-link i {
+  font-size: 1.25rem;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.icon-link:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+/* Brand colors */
+.icon-link.gmail { color: #D14836; }      /* Gmail red */
+.icon-link.linkedin { color: #0A66C2; }   /* LinkedIn blue */
+.icon-link.github { color: #181717; }     /* GitHub dark */
+
+/* Small helper used in other places; kept for compatibility */
+.contact-text .icon-link {
+  margin-right: 0.35rem;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+/* Footer layout */
 footer {
   border-top: 1px solid #e5e5e5;
   padding: 1.5rem 0;
   margin-top: 3rem;
 }
 
+/* Primary footer container: copyright left, icons right.
+   flex-wrap: nowrap + white-space: nowrap prevent icons dropping below copyright.
+*/
 .container.footer-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding: 0;
+  flex-wrap: nowrap;
+  padding: 0; /* use existing .container horizontal padding */
 }
 
+/* compatibility if markup uses .footer-content (older variant) */
 .footer-content {
   display: flex;
   flex-direction: column;
@@ -392,7 +429,6 @@ footer {
   color: #6a6a6a;
 }
 
-/* At larger viewports we prefer a single-row layout */
 @media (min-width: 600px) {
   .footer-content {
     flex-direction: row;
@@ -408,22 +444,25 @@ footer {
   }
 }
 
+/* copyright text */
 .footer-flex .copyright,
 .footer-content .copyright {
   margin: 0;
   font-size: 0.95rem;
   color: #333;
+  min-width: 0; /* allow shrinking on small widths */
 }
 
-/* Right-side social / contact links (icons + visible "Email" label) */
+/* Right-side social / contact icons */
 .footer-flex .social-icons,
 .footer-content .social-icons {
   display: inline-flex;
   gap: 0.6rem;
   align-items: center;
+  white-space: nowrap; /* prevent breaking within icon group */
 }
 
-/* Generic icon-link styling (icon + optional text) */
+/* compact icon link (icon only) */
 .footer-flex .icon-link,
 .footer-content .icon-link {
   display: inline-flex;
@@ -446,17 +485,11 @@ footer {
   outline: none;
 }
 
-/* Accessible focus ring (uses focus-visible rules defined below) */
+/* Accessible focus ring */
 .footer-flex .icon-link:focus-visible,
 .footer-content .icon-link:focus-visible {
   box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
   border-radius: 6px;
-}
-
-.email-text {
-  font-weight: 500;
-  color: inherit;
-  font-size: 0.95rem;
 }
 
 /* Footer link base colors (fallback for non-icon links) */
@@ -469,7 +502,7 @@ footer {
   color: #1a1a1a;
 }
 
-/* Responsive: stack on small screens */
+/* Small-screen fallback: stack vertically and center */
 @media (max-width: 600px) {
   .container.footer-flex {
     flex-direction: column;
@@ -488,10 +521,9 @@ footer {
     order: 1;
   }
 
-  /* Slightly larger tap targets on touch devices */
   .footer-flex .icon-link,
   .footer-content .icon-link {
-    padding: 0.25rem;
+    padding: 0.25rem; /* larger tap targets */
   }
 }
 
