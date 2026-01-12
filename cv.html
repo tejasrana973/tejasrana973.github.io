@@ -7,6 +7,22 @@
   <title>CV | Tejas Rana</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pBWV...snip..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- MathJax -->
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      tags: 'none'
+    },
+    options: {
+      skipHtmlTags: ['script','noscript','style','textarea','pre']
+    },
+    svg: {fontCache: 'global'}
+  };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
 </head>
 <body>
 
@@ -45,8 +61,8 @@
           <ul>
             <li>PHY401: Nuclear and particle physics</li>
             <li>PHY424: Relativistic quantum mechanics and quantum field theory</li>
-            <li>PHY302 / PHY306 / PHY403: Quantum mechanics &amp; atomic &amp; molecular physics</li>
-            <li>PHY301 / PHY303: Classical mechanics &amp; Electrodynamics</li>
+            <li>PHY302: Quantum mechanics; PHY306: Advanced quantum mechanics; PHY403: Atomic and molecular physics</li>
+            <li>PHY301: Classical mechanics; PHY303: Electrodynamics</li>
             <li>IDC410: Machine learning; IDC409: Introduction to data science</li>
             <li>IDC402: Nonlinear dynamics, chaos and complex systems; MTH407: Algorithms and complexity</li>
           </ul>
@@ -59,14 +75,14 @@
 
         <div class="cv-item">
           <div class="cv-item-header">
-            <span class="cv-item-title">Quantum decoherence measurement in B<sup>0</sup> → D<sup>*-</sup> ℓ<sup>+</sup> ν<sub>ℓ</sub></span>
+            <span class="cv-item-title">Quantum decoherence measurement in \(B^0 \to D^{*-}\,\ell^+\,\nu_{\ell}\) via the \(\Upsilon(4S)\) resonance.</span>
             <span class="cv-item-date">Jun 2025 – Present</span>
           </div>
           <p class="cv-item-subtitle">
             <a href="https://tejasrana973.github.io/thesis/index.html" target="_blank" rel="noopener noreferrer">Master thesis</a> under Dr. Hans-Günther Moser - Max-Planck-Institut für Physik, Munich, Germany.
           </p>
           <ul>
-            <li>Generated signal and generic MC samples using EvtGen and the DIRAC Grid, performed full reconstruction and analyzed distributions of key variables.</li>
+            <li>Generated signal and $500\ fb^{-1}$ generic MC samples with <code>EvtGen</code>, processed via the DIRAC Grid, performed full reconstruction and analyzed distributions of key variables.</li>
             <li>Implemented selection optimisation and background suppression; performed a binned 2D template fit using <code>pyhf</code>, extracted sWeights and applied them to combined MC to separate signal, true-D* and fake-D* background components; validated against truth-matched distributions.</li>
             <li>Performed unbinned maximum-likelihood fits with <code>zfit</code> to obtain analytic component PDFs; next steps include systematic-uncertainty evaluation and applying the analysis to Belle II data.</li>
           </ul>
