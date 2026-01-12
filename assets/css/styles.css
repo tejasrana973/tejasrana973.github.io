@@ -197,6 +197,43 @@ a:focus {
   color: #1a1a1a;
 }
 
+
+/* External links with icon + text and subtle hover lift */
+.external-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.external-links .external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #4a4a4a;            /* text color */
+  font-size: 0.95rem;
+  transition: transform .12s ease, color .12s ease;
+}
+
+.external-links .external-link:hover,
+.external-links .external-link:focus {
+  transform: translateY(-3px);
+  color: #1a1a1a;
+  outline: none;
+}
+
+/* Keep icons sized and vertically aligned, use existing brand color classes */
+.external-links .icon-link {
+  font-size: 1.1rem;         /* icon size */
+  line-height: 1;
+  vertical-align: middle;
+  display: inline-flex;
+}
+
+
+
 /* CV Page */
 .cv-section {
   margin-bottom: 2rem;
