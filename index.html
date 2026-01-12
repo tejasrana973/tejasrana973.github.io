@@ -7,6 +7,22 @@
   <title>Tejas Rana | Physics Researcher</title>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pBWV...snip..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- MathJax -->
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      tags: 'none'
+    },
+    options: {
+      skipHtmlTags: ['script','noscript','style','textarea','pre']
+    },
+    svg: {fontCache: 'global'}
+  };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
 </head>
 <body>
 
@@ -29,7 +45,7 @@
         <img src="assets/img/profile.jpg" alt="Photo of Tejas Rana" class="profile-photo">
         <div class="profile-info">
           <h1>Tejas Rana</h1>
-          <p class="profile-subtitle">Master's thesis student — Experimental Particle Physics</p>
+          <p class="profile-subtitle">Master's thesis student - Experimental Particle Physics</p>
           <div class="external-links">
             <a href="https://www.linkedin.com/in/tejas-rana-1769b931b/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
             <a href="https://github.com/tejasrana973" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
@@ -41,26 +57,36 @@
         <h2 id="about-heading">About</h2>
 
         <p>
-          I am a master’s thesis student with the Belle II group at the Max Planck Institute for Physics (Munich) and a final-year BS-MS physics student with a minor in data science. My research interests are in applying computational and statistical techniques to experimental particle physics, with a focus on precision measurements and searches that test the Standard Model (SM) and look for evidence of physics beyond the Standard Model (BSM).
+        I am a master’s thesis student with the Belle II group at the Max Planck Institute for Physics (Munich) and a final-year BS-MS physics student with a minor in data science. My research interests are in applying computational and statistical techniques to experimental particle physics, with a focus on precision measurements and searches that test the Standard Model (SM) and look for evidence of physics beyond the Standard Model (BSM).
         </p>
 
         <p>
-          My current thesis measures quantum decoherence in the semi-leptonic decay channel
-          <strong>B<sup>0</sup> → D<sup>*−</sup> ℓ<sup>+</sup> ν<sub>ℓ</sub></strong>, using the Υ(4S) → B<sup>0</sup> \bar{B}<sup>0</sup> resonance. For this project I have generated and reconstructed signal and generic Monte Carlo samples, applied selection optimisation and background suppression, and performed both binned and unbinned fits using <code>pyhf</code> and <code>zfit</code>. A detailed summary of the work is available on the <a href="https://tejasrana973.github.io/thesis/index.html" target="_blank" rel="noopener noreferrer">Master Thesis</a> page.
+          My master thesis measures quantum decoherence in the semi-leptonic decay channel
+          \(B^0 \to D^{*-}\,\ell^+\,\nu_{\ell}\), via the \(\Upsilon(4S)\to B^0\bar{B}^0\) resonance.
+          For this project I have generated and reconstructed Monte Carlo samples, applied selection
+          optimisation and background suppression, and performed both binned and unbinned fits using
+          <code>pyhf</code> and <code>zfit</code>. A detailed summary is on the
+          <a href="https://tejasrana973.github.io/thesis/index.html" target="_blank" rel="noopener noreferrer">Master Thesis</a> page.
         </p>
 
         <p>
-          Outside the thesis, I completed a reading project on Fermilab’s muon g-2 experiment and learned detector-level simulation methods with Geant4. I also implemented three-flavour neutrino oscillations using the PMNS formalism and built example quantum circuits on IBM Qiskit (QasmSimulator).
+          Outside the thesis, I completed a reading project on Fermilab’s muon g-2 experiment and learned
+          detector-level simulation methods with Geant4. I also implemented three-flavour neutrino oscillations
+          using the PMNS formalism and built demonstration circuits on IBM Qiskit (QasmSimulator).
         </p>
 
         <p>
-          I am applying to PhD programs in experimental particle physics for Fall 2026. I am particularly interested in analysis and precision-measurement work at large experiments (ATLAS, CMS, LHCb, ALICE) and other major laboratories.
+          I am applying to PhD programs in experimental particle physics for Fall 2026, with particular interest
+          in analysis and precision-measurement work at large experiments (ATLAS, CMS, LHCb, ALICE) and other
+          major laboratories.
         </p>
 
         <p>
-          On this website you can find my CV, a detailed description of my thesis, and links to code and documentation. Thank you for visiting — I appreciate your time.
+          On this website you can find my CV and a detailed description of my thesis.
+          Thank you for visiting - I appreciate your time!
         </p>
       </section>
+
     </div>
   </main>
 
