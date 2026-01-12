@@ -1,5 +1,5 @@
-# tejasrana973.github.io
+# Personal academic website - Tejas Rana
 
-Personal academic website. Static HTML/CSS with MathJax for mathematical typesetting.
+Built with plain HTML/CSS. Math is rendered with MathJax; icons use Font Awesome.
 
 **Live URL:** https://tejasrana973.github.io/
