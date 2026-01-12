@@ -198,7 +198,7 @@ a:focus {
 }
 
 
-/* External links with icon + text and subtle hover lift */
+/* External links (icon + text) - keep icon colored, text neutral  and subtle hover lift*/
 .external-links {
   display: flex;
   gap: 1rem;
@@ -207,6 +207,7 @@ a:focus {
   align-items: center;
 }
 
+/* whole link block */
 .external-links .external-link {
   display: inline-flex;
   align-items: center;
@@ -217,6 +218,7 @@ a:focus {
   transition: transform .12s ease, color .12s ease;
 }
 
+/* hover lift (same motion as footer icons) */
 .external-links .external-link:hover,
 .external-links .external-link:focus {
   transform: translateY(-3px);
@@ -224,14 +226,18 @@ a:focus {
   outline: none;
 }
 
-/* Keep icons sized and vertically aligned, use existing brand color classes */
+/* icon sizing — brand classes (gmail/linkedin/github) color the icon itself */
 .external-links .icon-link {
-  font-size: 1.1rem;         /* icon size */
+  font-size: 1.1rem;
   line-height: 1;
   vertical-align: middle;
   display: inline-flex;
 }
 
+/* ensure the brand color on <i> overrides anchor text color */
+.external-links .icon-link.gmail { color: #D14836; }
+.external-links .icon-link.linkedin { color: #0A66C2; }
+.external-links .icon-link.github { color: #181717; }
 
 
 /* CV Page */
