@@ -2,7 +2,7 @@
 
 Static site built with plain HTML/CSS. Math is rendered with MathJax; icons use Font Awesome; Hosted on GitHub Pages.
 
-Contains contact form: Google Apps Script backend + reCAPTCHA v2 checkbox
+Contains contact form: Google Apps Script backend + reCAPTCHA v2 checkbox.
 
 **Live:** https://tejasrana973.github.io/
 
