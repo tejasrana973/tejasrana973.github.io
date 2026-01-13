@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contact Tejas Rana - MS student in experimental particle physics.">
+  <title>Contact - Tejas Rana</title>
+
+  <!-- site styles & icons -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pBWV...snip..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- MathJax -->
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      tags: 'none'
+    },
+    options: {
+      skipHtmlTags: ['script','noscript','style','textarea','pre']
+    },
+    svg: {fontCache: 'global'}
+  };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+  <!-- Configuration: SITE_CONFIG -->
+  <script>
+    window.SITE_CONFIG = {
+      APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxxYAAAOonZJkploWN6PWDn-Nqju8vp8x7Wi12Dp0qNxp_YrqP-CER8mHV83jK9vARv/exec',
+      RECAPTCHA_SITE_KEY: '6LfNXkksAAAAAGhYuHfYdOKy_Y58fzxrerM7Pdgm'
+    };
+  </script>
+
+  <!-- load reCAPTCHA explicitly so we can render programmatically -->
+  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+</head>
+
+<body class="contact-page">
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="site-title">Tejas Rana</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="cv.html">CV</a></li>
+          <li><a href="thesis/index.html">Master Thesis</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main id="main-content">
+    <div class="container">
+      <section aria-labelledby="contact-heading">
+        <h1 id="contact-heading" class="page-title">Contact</h1>
+        <p class="page-sub">If you would like to contact me about research, collaboration, or PhD applications, please use the form below. Alternatively, email me directly at <strong>ranatejas137@gmail.com</strong>.</p>
+
+        <!-- quota warning (filled by JS) -->
+        <div id="quotaWarning" class="message warn" style="display:none;"></div>
+
+        <div class="contact-card" style="margin-top:1rem;">
+          <form id="contactForm" novalidate>
+            <!-- honeypot -->
+            <label class="visually-hidden" for="hp_field">Leave empty</label>
+            <input id="hp_field" name="hp_field" type="text" class="visually-hidden" autocomplete="off" />
+
+            <div class="form-row" style="margin-top:0.25rem;">
+              <div class="form-col">
+                <label for="name">Your name</label>
+                <input id="name" name="name" type="text" placeholder="Your full name" autocomplete="name">
+              </div>
+              <div class="form-col">
+                <label for="email">Your email</label>
+                <input id="email" name="email" type="email" placeholder="name@example.com" required autocomplete="email">
+              </div>
+            </div>
+
+            <div style="margin-top:0.75rem;">
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" type="text" placeholder="Short subject" required>
+            </div>
+
+            <div style="margin-top:0.75rem;">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Write your message - please include affiliation and purpose." required></textarea>
+            </div>
+
+            <div style="margin-top:0.9rem;">
+              <!-- reCAPTCHA will be rendered programmatically into this div -->
+              <div id="recaptcha" aria-hidden="false"></div>
+              <div class="helper" style="margin-top:0.5rem;">reCAPTCHA (checkbox) protects this form from automated spam.</div>
+            </div>
+
+            <div style="margin-top:1rem; display:flex; gap:1rem; align-items:center;">
+              <button id="sendBtn" class="btn" type="submit">Send message</button>
+              <div id="loader" style="display:none; color:#6b7280;">Sending…</div>
+            </div>
+
+            <div id="resultMessage" style="margin-top:1rem;"></div>
+
+            <p class="small" style="margin-top:1rem;">
+              By using this form you consent to send your message to <strong>ranatejas137@gmail.com</strong>. If automatic delivery fails you will be instructed to email directly.
+            </p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-flex">
+      <p class="copyright">&copy; 2026 Tejas Rana</p>
+
+      <div class="social-icons" aria-label="Contact and social links">
+        <a class="icon-link gmail" href="mailto:ranatejas137@gmail.com" aria-label="Email Tejas Rana">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+        </a>
+
+        <a class="icon-link linkedin" href="https://www.linkedin.com/in/tejas-rana-1769b931b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+        </a>
+
+        <a class="icon-link github" href="https://github.com/tejasrana973" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Contact form JS (uses SITE_CONFIG set in head) -->
+  <script>
+  (function(){
+    const APPS_SCRIPT_URL = (window.SITE_CONFIG && window.SITE_CONFIG.APPS_SCRIPT_URL) || '';
+    const RECAPTCHA_SITE_KEY = (window.SITE_CONFIG && window.SITE_CONFIG.RECAPTCHA_SITE_KEY) || '';
+
+    let recaptchaWidgetId = null; // will hold the rendered widget id
+    // Called by the reCAPTCHA script when it's ready (I set this name in script src ?onload=onRecaptchaLoad)
+    window.onRecaptchaLoad = function(){
+      try {
+        if(!RECAPTCHA_SITE_KEY){
+          console.warn('reCAPTCHA site key not configured.');
+          return;
+        }
+        // render v2 checkbox explicitly
+        recaptchaWidgetId = grecaptcha.render('recaptcha', {
+          'sitekey': RECAPTCHA_SITE_KEY,
+          'theme': 'light'
+        });
+      } catch(e){
+        console.warn('reCAPTCHA render failed', e);
+      }
+    };
+
+    const form = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const loader = document.getElementById('loader');
+    const resultMessage = document.getElementById('resultMessage');
+    const quotaWarning = document.getElementById('quotaWarning');
+    const shownAt = Date.now(); // time-to-fill anti-bot
+
+    function showResult(text, type){
+      resultMessage.innerHTML = '';
+      const div = document.createElement('div');
+      div.className = 'message ' + (type === 'success' ? 'success' : (type === 'warn' ? 'warn' : 'error'));
+      div.textContent = text;
+      resultMessage.appendChild(div);
+    }
+    function setBusy(b){ sendBtn.disabled = b; loader.style.display = b ? 'block' : 'none'; }
+
+    async function checkQuota(){
+      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf(APPS_SCRIPT_URL) !== -1) return;
+      try {
+        const resp = await fetch(APPS_SCRIPT_URL + '?op=status', { method:'GET', cache:'no-store' });
+        if(!resp.ok) return;
+        const data = await resp.json();
+        const remaining = Number(data.remainingQuota || -1);
+        if(remaining >= 0 && remaining < 1){
+          quotaWarning.style.display = 'block';
+          quotaWarning.textContent = 'Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com';
+          sendBtn.disabled = true;
+        } else {
+          quotaWarning.style.display = 'none';
+        }
+      } catch(e){
+        console.warn('quota check failed', e);
+      }
+    }
+
+    checkQuota();
+
+    function validate(values){
+      if(values.hp_field && values.hp_field.trim().length > 0) return { ok:false, reason:'hp' };
+      if(!values.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) return { ok:false, reason:'invalid_email' };
+      if(!values.subject || values.subject.trim().length < 3) return { ok:false, reason:'short_subject' };
+      if(!values.message || values.message.trim().length < 20) return { ok:false, reason:'short_message' };
+      const elapsed = (Date.now() - shownAt) / 1000;
+      if(elapsed < 3) return { ok:false, reason:'too_fast' };
+      return { ok:true };
+    }
+
+    form.addEventListener('submit', async function(ev){
+      ev.preventDefault();
+      resultMessage.innerHTML = '';
+
+      const fd = new FormData(form);
+      const values = Object.fromEntries(fd.entries());
+
+      const v = validate(values);
+      if(!v.ok){
+        let msg = 'Please check the form.';
+        if(v.reason === 'hp') msg = 'Bot detected.';
+        else if(v.reason === 'invalid_email') msg = 'Please enter a valid email.';
+        else if(v.reason === 'short_subject') msg = 'Please enter a short subject (3+ chars).';
+        else if(v.reason === 'short_message') msg = 'Message is too short (min 20 chars).';
+        else if(v.reason === 'too_fast') msg = 'Please take a little more time to write your message.';
+        showResult(msg, 'error');
+        return;
+      }
+
+      // get recaptcha token via widget id
+      if(!recaptchaWidgetId && typeof grecaptcha !== 'undefined' && grecaptcha.getResponse){
+        // maybe it was rendered without our widget id; try to get default response
+      }
+      const token = (typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) ? grecaptcha.getResponse(recaptchaWidgetId) : (typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '');
+
+      if(!token){
+        showResult('Please complete the reCAPTCHA challenge.', 'error');
+        return;
+      }
+
+      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf(APPS_SCRIPT_URL) !== -1){
+        showResult('Submission endpoint not configured. Please email directly to ranatejas137@gmail.com', 'error');
+        return;
+      }
+
+      const payload = {
+        name: values.name || '',
+        email: values.email || '',
+        subject: values.subject || '',
+        message: values.message || '',
+        hp_field: values.hp_field || '',
+        recaptchaToken: token
+      };
+
+      setBusy(true);
+      try {
+        const resp = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(payload),
+          cache: 'no-store'
+        });
+
+        const result = await resp.json().catch(()=>({ ok:false }));
+
+        if(result && result.ok){
+          showResult('Your message has been sent, Thank you.', 'success');
+          form.reset();
+          try { if(typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId); else if(typeof grecaptcha !== 'undefined') grecaptcha.reset(); } catch(e){}
+        } else {
+          if(result && result.reason === 'quota'){
+            showResult('Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com', 'error');
+            quotaWarning.style.display = 'block';
+            quotaWarning.textContent = 'Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com';
+            sendBtn.disabled = true;
+          } else {
+            showResult('Sorry - Message could not be sent for unforeseen reasons. Kindly email ranatejas137@gmail.com', 'error');
+          }
+        }
+      } catch(err){
+        console.error('Submit error', err);
+        showResult('Unexpected error. Please try again or email ranatejas137@gmail.com', 'error');
+      } finally {
+        setBusy(false);
+      }
+
+    });
+
+  })();
+  </script>
+</body>
+</html>

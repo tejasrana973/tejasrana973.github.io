@@ -1,6 +1,4 @@
 /* 
- * Academic Personal Website Stylesheet
- * Minimal, accessible, near-monochrome design
  * System fonts, max-width 900px
  */
 
@@ -198,7 +196,7 @@ a:focus {
 }
 
 
-/* External links (icon + text) - keep icon colored, text neutral  and subtle hover lift*/
+/* External links (icon + text) - icon colored, text neutral  and subtle hover lift*/
 .external-links {
   display: flex;
   gap: 1rem;
@@ -622,4 +620,152 @@ footer {
     max-width: 100%;
     padding: 0;
   }
+}
+
+
+/*
+   Contact-page
+   scoped under .contact-page to avoid global overrides
+*/
+
+.contact-page {
+  --accent: #1f6feb;
+  --muted: #6b7280;
+  --radius: 8px;
+  --maxwidth: 920px;
+}
+
+/* container adjustments only for contact page */
+.contact-page .container {
+  max-width: var(--maxwidth);
+  padding: 0 1rem;
+}
+
+/* contact navigation tweaks */
+.contact-page .site-nav {
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+/* page headings */
+.contact-page .page-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0.1rem 0 0.6rem 0;
+}
+.contact-page .page-sub {
+  color: var(--muted);
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+}
+
+/* contact card */
+.contact-page .contact-card {
+  border-radius: var(--radius);
+  padding: 1rem 1.15rem;
+  background: transparent;
+  border: 1px solid #f2f2f2;
+  margin-bottom: 1rem;
+}
+
+/* form layout */
+.contact-page .form-row {
+  display: flex;
+  gap: 1rem;
+}
+.contact-page .form-col { flex: 1; min-width: 0; }
+
+.contact-page label {
+  display:block;
+  font-size:0.92rem;
+  margin-bottom:0.35rem;
+  color:inherit;
+}
+
+/* contact inputs*/
+.contact-page input[type="text"],
+.contact-page input[type="email"],
+.contact-page textarea {
+  width:100%;
+  padding:0.6rem 0.65rem;
+  border-radius:6px;
+  border:1px solid #cfcfcf;
+  background:#fff;
+  font-size:0.95rem;
+  color:inherit;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+/* subtle but clear focus state: stronger accent and soft shadow */
+.contact-page input:focus,
+.contact-page textarea:focus {
+  border-color: rgba(31,107,235,0.6);
+  box-shadow: 0 6px 18px rgba(31,107,235,0.08);
+  outline: none;
+}
+
+/* slightly darker placeholder for legibility*/
+.contact-page input::placeholder,
+.contact-page textarea::placeholder {
+  color: #8b8b8b;
+}
+
+/* textarea size */
+.contact-page textarea { min-height:140px; resize:vertical; }
+
+/* helper */
+.contact-page .helper { font-size:0.85rem; color:var(--muted); margin-top:0.4rem; }
+
+/* submit */
+.contact-page .btn {
+  display:inline-block;
+  border:0;
+  background:var(--accent);
+  color:white;
+  padding:0.55rem 0.9rem;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:0.95rem;
+}
+.contact-page .btn:disabled { opacity:0.55; cursor:not-allowed; }
+
+/* message area */
+.contact-page .message {
+  margin-top:0.9rem;
+  font-size:0.95rem;
+  padding:0.8rem;
+  border-radius:6px;
+}
+.contact-page .message.success{
+  color: #064e3b;
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+}
+.contact-page .message.error{
+  color: #7f1d1d;
+  background: #fff1f2;
+  border: 1px solid #fecaca;
+}
+.contact-page .message.warn{
+  color: #5b4b00;
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+}
+
+/* visually hidden honeypot */
+.contact-page .visually-hidden{
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px,1px,1px,1px);
+  white-space: nowrap; border:0; padding:0; margin:-1px;
+}
+
+/* small print */
+.contact-page .small { color:var(--muted); font-size:0.88rem; }
+
+/* responsive */
+@media (max-width:720px){
+  .contact-page .form-row { flex-direction: column; }
 }
