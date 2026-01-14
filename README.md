@@ -1,4 +1,4 @@
-# Personal academic website - Tejas Rana
+# Personal academic website
 
 Static site built with plain HTML/CSS. Math is rendered with MathJax; icons use Font Awesome; Hosted on GitHub Pages.
 
