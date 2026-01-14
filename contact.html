@@ -33,6 +33,13 @@
     };
   </script>
 
+  <script>
+    // Normalize & expose endpoint globally for the contact form
+    window.APPS_SCRIPT_URL = String(
+      (window.SITE_CONFIG && window.SITE_CONFIG.APPS_SCRIPT_URL) || ''
+    ).trim();
+  </script>
+
   <!-- load reCAPTCHA explicitly so we can render programmatically -->
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </head>
@@ -235,8 +242,15 @@
         return;
       }
 
-      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf(APPS_SCRIPT_URL) !== -1){
-        showResult('Submission endpoint not configured. Please email directly to ranatejas137@gmail.com', 'error');
+      if (
+        typeof APPS_SCRIPT_URL === 'undefined' ||
+        !APPS_SCRIPT_URL ||
+        APPS_SCRIPT_URL.trim().length < 10
+      ) {
+        showResult(
+          'Submission endpoint not configured. Please email directly to ranatejas137@gmail.com',
+          'error'
+        );
         return;
       }
 
