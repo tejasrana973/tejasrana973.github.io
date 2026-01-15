@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Contact Tejas Rana - MS student in experimental particle physics.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Contact Tejas Rana - MS student in experimental particle physics." />
   <title>Contact - Tejas Rana</title>
 
   <!-- site styles & icons -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pBWV...snip..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- MathJax -->
   <script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(', '\\)'], ['$', '$']],
-      tags: 'none'
-    },
-    options: {
-      skipHtmlTags: ['script','noscript','style','textarea','pre']
-    },
-    svg: {fontCache: 'global'}
-  };
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        tags: 'none'
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre']
+      },
+      svg: {fontCache: 'global'}
+    };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 
@@ -34,16 +34,13 @@
   </script>
 
   <script>
-    // Normalize & expose endpoint globally for the contact form
-    window.APPS_SCRIPT_URL = String(
-      (window.SITE_CONFIG && window.SITE_CONFIG.APPS_SCRIPT_URL) || ''
-    ).trim();
+    // expose normalized URL globally
+    window.APPS_SCRIPT_URL = String((window.SITE_CONFIG && window.SITE_CONFIG.APPS_SCRIPT_URL) || '').trim();
   </script>
 
   <!-- load reCAPTCHA explicitly so we can render programmatically -->
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </head>
-
 <body class="contact-page">
 
   <!-- Header -->
@@ -98,6 +95,9 @@
               <textarea id="message" name="message" placeholder="Write your message - please include affiliation and purpose." required></textarea>
             </div>
 
+            <!-- hidden recaptcha token (will be filled before submit) -->
+            <input type="hidden" id="recaptchaTokenField" name="recaptchaToken" value="">
+
             <div style="margin-top:0.9rem;">
               <!-- reCAPTCHA will be rendered programmatically into this div -->
               <div id="recaptcha" aria-hidden="false"></div>
@@ -120,7 +120,6 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="container footer-flex">
       <p class="copyright">&copy; 2026 Tejas Rana</p>
@@ -141,21 +140,22 @@
     </div>
   </footer>
 
+  <!-- Hidden iframe (for form submission to avoid CORS) -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
   <!-- Contact form JS (uses SITE_CONFIG set in head) -->
   <script>
   (function(){
-    const APPS_SCRIPT_URL = (window.SITE_CONFIG && window.SITE_CONFIG.APPS_SCRIPT_URL) || '';
-    const RECAPTCHA_SITE_KEY = (window.SITE_CONFIG && window.SITE_CONFIG.RECAPTCHA_SITE_KEY) || '';
+    var APPS_SCRIPT_URL = (window.SITE_CONFIG && window.SITE_CONFIG.APPS_SCRIPT_URL) || '';
+    var RECAPTCHA_SITE_KEY = (window.SITE_CONFIG && window.SITE_CONFIG.RECAPTCHA_SITE_KEY) || '';
 
-    let recaptchaWidgetId = null; // will hold the rendered widget id
-    // Called by the reCAPTCHA script when it's ready (I set this name in script src ?onload=onRecaptchaLoad)
+    var recaptchaWidgetId = null;
     window.onRecaptchaLoad = function(){
       try {
         if(!RECAPTCHA_SITE_KEY){
           console.warn('reCAPTCHA site key not configured.');
           return;
         }
-        // render v2 checkbox explicitly
         recaptchaWidgetId = grecaptcha.render('recaptcha', {
           'sitekey': RECAPTCHA_SITE_KEY,
           'theme': 'light'
@@ -165,29 +165,30 @@
       }
     };
 
-    const form = document.getElementById('contactForm');
-    const sendBtn = document.getElementById('sendBtn');
-    const loader = document.getElementById('loader');
-    const resultMessage = document.getElementById('resultMessage');
-    const quotaWarning = document.getElementById('quotaWarning');
-    const shownAt = Date.now(); // time-to-fill anti-bot
+    var form = document.getElementById('contactForm');
+    var sendBtn = document.getElementById('sendBtn');
+    var loader = document.getElementById('loader');
+    var resultMessage = document.getElementById('resultMessage');
+    var quotaWarning = document.getElementById('quotaWarning');
+    var shownAt = Date.now();
 
     function showResult(text, type){
       resultMessage.innerHTML = '';
-      const div = document.createElement('div');
+      var div = document.createElement('div');
       div.className = 'message ' + (type === 'success' ? 'success' : (type === 'warn' ? 'warn' : 'error'));
       div.textContent = text;
       resultMessage.appendChild(div);
     }
     function setBusy(b){ sendBtn.disabled = b; loader.style.display = b ? 'block' : 'none'; }
 
+    // Quota check (uses GET /?op=status). safe simple check
     async function checkQuota(){
-      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf(APPS_SCRIPT_URL) !== -1) return;
       try {
-        const resp = await fetch(APPS_SCRIPT_URL + '?op=status', { method:'GET', cache:'no-store' });
+        if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.length < 8) return;
+        var resp = await fetch(APPS_SCRIPT_URL + '?op=status', { method:'GET', cache:'no-store' });
         if(!resp.ok) return;
-        const data = await resp.json();
-        const remaining = Number(data.remainingQuota || -1);
+        var data = await resp.json().catch(function(){return null;});
+        var remaining = Number((data && data.remainingQuota) || -1);
         if(remaining >= 0 && remaining < 1){
           quotaWarning.style.display = 'block';
           quotaWarning.textContent = 'Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com';
@@ -199,7 +200,6 @@
         console.warn('quota check failed', e);
       }
     }
-
     checkQuota();
 
     function validate(values){
@@ -207,21 +207,56 @@
       if(!values.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) return { ok:false, reason:'invalid_email' };
       if(!values.subject || values.subject.trim().length < 3) return { ok:false, reason:'short_subject' };
       if(!values.message || values.message.trim().length < 20) return { ok:false, reason:'short_message' };
-      const elapsed = (Date.now() - shownAt) / 1000;
+      var elapsed = (Date.now() - shownAt) / 1000;
       if(elapsed < 3) return { ok:false, reason:'too_fast' };
       return { ok:true };
     }
 
-    form.addEventListener('submit', async function(ev){
+    // Listen to postMessage responses from iframe
+    function onIframeMessage(e){
+      // we accept messages from anywhere (script.google will post the HTML which runs in iframe),
+      // but for extra safety you could check e.origin if desired.
+      var data = e.data;
+      try {
+        // sometimes e.data is stringified JSON
+        if(typeof data === 'string'){
+          data = JSON.parse(data);
+        }
+      } catch(err){
+        data = { ok:false };
+      }
+      window.removeEventListener('message', onIframeMessage);
+      setBusy(false);
+
+      if(data && data.ok){
+        showResult('Your message has been sent, Thank you.', 'success');
+        form.reset();
+        try { if(typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId); else if(typeof grecaptcha !== 'undefined') grecaptcha.reset(); } catch(e){}
+      } else {
+        var reason = (data && data.reason) || '';
+        if(reason === 'quota'){
+          showResult('Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com', 'error');
+          quotaWarning.style.display = 'block';
+          quotaWarning.textContent = 'Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com';
+          sendBtn.disabled = true;
+        } else if(reason === 'validation') {
+          showResult('Form validation failed on server. Please check your inputs.', 'error');
+        } else {
+          showResult('Sorry - Message could not be sent for unforeseen reasons. Kindly email ranatejas137@gmail.com', 'error');
+        }
+      }
+    }
+
+    form.addEventListener('submit', function(ev){
       ev.preventDefault();
       resultMessage.innerHTML = '';
 
-      const fd = new FormData(form);
-      const values = Object.fromEntries(fd.entries());
+      var fd = new FormData(form);
+      var values = Object.fromEntries(fd.entries());
 
-      const v = validate(values);
+      var v = validate(values);
       if(!v.ok){
-        let msg = 'Please check the form.';
+        var msg = 'Please check the form.';
         if(v.reason === 'hp') msg = 'Bot detected.';
         else if(v.reason === 'invalid_email') msg = 'Please enter a valid email.';
         else if(v.reason === 'short_subject') msg = 'Please enter a short subject (3+ chars).';
@@ -231,72 +266,39 @@
         return;
       }
 
-      // get recaptcha token via widget id
-      if(!recaptchaWidgetId && typeof grecaptcha !== 'undefined' && grecaptcha.getResponse){
-        // maybe it was rendered without our widget id; try to get default response
-      }
-      const token = (typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) ? grecaptcha.getResponse(recaptchaWidgetId) : (typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '');
+      // get recaptcha token
+      var token = (typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null)
+        ? grecaptcha.getResponse(recaptchaWidgetId)
+        : (typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '');
 
       if(!token){
         showResult('Please complete the reCAPTCHA challenge.', 'error');
         return;
       }
 
-      if (
-        typeof APPS_SCRIPT_URL === 'undefined' ||
-        !APPS_SCRIPT_URL ||
-        APPS_SCRIPT_URL.trim().length < 10
-      ) {
-        showResult(
-          'Submission endpoint not configured. Please email directly to ranatejas137@gmail.com',
-          'error'
-        );
+      // ensure endpoint present
+      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.length < 8){
+        showResult('Submission endpoint not configured. Please email directly to ranatejas137@gmail.com', 'error');
         return;
       }
 
-      const payload = {
-        name: values.name || '',
-        email: values.email || '',
-        subject: values.subject || '',
-        message: values.message || '',
-        hp_field: values.hp_field || '',
-        recaptchaToken: token
-      };
+      // set recaptcha hidden field
+      var tokenField = document.getElementById('recaptchaTokenField');
+      tokenField.value = token;
 
+      // prepare form to post into hidden iframe
+      form.action = APPS_SCRIPT_URL;
+      form.method = 'POST';
+      form.target = 'hidden_iframe';
+
+      // listen for message once
+      window.addEventListener('message', onIframeMessage, false);
+
+      // set busy
       setBusy(true);
-      try {
-        const resp = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=UTF-8'
-          },
-          body: JSON.stringify(payload),
-          cache: 'no-store'
-        });
 
-        const result = await resp.json().catch(()=>({ ok:false }));
-
-        if(result && result.ok){
-          showResult('Your message has been sent, Thank you.', 'success');
-          form.reset();
-          try { if(typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId); else if(typeof grecaptcha !== 'undefined') grecaptcha.reset(); } catch(e){}
-        } else {
-          if(result && result.reason === 'quota'){
-            showResult('Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com', 'error');
-            quotaWarning.style.display = 'block';
-            quotaWarning.textContent = 'Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com';
-            sendBtn.disabled = true;
-          } else {
-            showResult('Sorry - Message could not be sent for unforeseen reasons. Kindly email ranatejas137@gmail.com', 'error');
-          }
-        }
-      } catch(err){
-        console.error('Submit error', err);
-        showResult('Unexpected error. Please try again or email ranatejas137@gmail.com', 'error');
-      } finally {
-        setBusy(false);
-      }
-
+      // submit - target is hidden iframe, so main page stays
+      form.submit();
     });
 
   })();
