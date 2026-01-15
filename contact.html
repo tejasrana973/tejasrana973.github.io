@@ -385,42 +385,6 @@
       }
     });
 
-
-      // get recaptcha token
-      var token = (typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null)
-        ? grecaptcha.getResponse(recaptchaWidgetId)
-        : (typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '');
-
-      if(!token){
-        showResult('Please complete the reCAPTCHA challenge.', 'error');
-        return;
-      }
-
-      // ensure endpoint present
-      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.length < 8){
-        showResult('Submission endpoint not configured. Please email directly to ranatejas137@gmail.com', 'error');
-        return;
-      }
-
-      // set recaptcha hidden field
-      var tokenField = document.getElementById('recaptchaTokenField');
-      tokenField.value = token;
-
-      // prepare form to post into hidden iframe
-      form.action = APPS_SCRIPT_URL;
-      form.method = 'POST';
-      form.target = 'hidden_iframe';
-
-      // listen for message once
-      window.addEventListener('message', onIframeMessage, false);
-
-      // set busy
-      setBusy(true);
-
-      // submit - target is hidden iframe, so main page stays
-      form.submit();
-    });
-
   })();
   </script>
 </body>
