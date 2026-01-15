@@ -212,20 +212,30 @@
       return { ok:true };
     }
 
-    // Listen to postMessage responses from iframe
+    // Listen to postMessage responses from iframe (safer: ensure it came from our iframe)
     function onIframeMessage(e){
-      // we accept messages from anywhere (script.google will post the HTML which runs in iframe),
-      // but for extra safety you could check e.origin if desired.
-      var data = e.data;
       try {
-        // sometimes e.data is stringified JSON
-        if(typeof data === 'string'){
-          data = JSON.parse(data);
+        var iframe = document.getElementById('hidden_iframe');
+        // ensure event is from the iframe window we submitted to
+        if (!iframe || e.source !== iframe.contentWindow) {
+          // ignore unrelated postMessage (e.g. reCAPTCHA or other third-party frames)
+          return;
         }
-      } catch(err){
+
+        var data = e.data;
+        // sometimes e.data is a JSON string, sometimes object
+        if (typeof data === 'string') {
+          try { data = JSON.parse(data); } catch(_) { data = { ok:false }; }
+        }
+      } catch(err) {
+        // safety fallback
         data = { ok:false };
       }
+
+      // remove listener (one-time)
       window.removeEventListener('message', onIframeMessage);
+
+      // stop busy UI
       setBusy(false);
 
       if(data && data.ok){
