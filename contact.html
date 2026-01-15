@@ -286,6 +286,116 @@
         return;
       }
 
+      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.length < 8){
+        showResult('Submission endpoint not configured. Please email directly to ranatejas137@gmail.com', 'error');
+        return;
+      }
+
+      // set recaptcha hidden field
+      var tokenField = document.getElementById('recaptchaTokenField');
+      tokenField.value = token;
+
+      // prepare form to post into hidden iframe
+      form.action = APPS_SCRIPT_URL;
+      form.method = 'POST';
+      form.target = 'hidden_iframe';
+
+      // robust handlers & timeout
+      var iframe = document.getElementById('hidden_iframe');
+      var finished = false;
+      var timeoutId = null;
+
+      function cleanup() {
+        try { window.removeEventListener('message', onIframeMessage); } catch(e){}
+        try { iframe.removeEventListener('load', onIframeLoad); } catch(e){}
+        if(timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+      }
+
+      // message handler (only accept messages from our iframe)
+      function onIframeMessage(e){
+        try {
+          if (!iframe || e.source !== iframe.contentWindow) return; // ignore other frames
+          var data = e.data;
+          if(typeof data === 'string'){
+            try { data = JSON.parse(data); } catch(_) { data = { ok:false }; }
+          }
+        } catch(err){
+          data = { ok:false };
+        }
+        if(finished) return;
+        finished = true;
+        cleanup();
+        setBusy(false);
+
+        if(data && data.ok){
+          showResult('Your message has been sent, Thank you.', 'success');
+          form.reset();
+          try { if(typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId); else if(typeof grecaptcha !== 'undefined') grecaptcha.reset(); } catch(e){}
+        } else {
+          var reason = (data && data.reason) || '';
+          if(reason === 'quota'){
+            showResult('Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com', 'error');
+            quotaWarning.style.display = 'block';
+            quotaWarning.textContent = 'Sorry - Daily email quota is over. Kindly directly email: ranatejas137@gmail.com';
+            sendBtn.disabled = true;
+          } else if(reason === 'validation') {
+            showResult('Form validation failed on server. Please check your inputs.', 'error');
+          } else {
+            showResult('Sorry - Message could not be sent for unforeseen reasons. Kindly email ranatejas137@gmail.com', 'error');
+          }
+        }
+      }
+
+      // load handler fallback: iframe loaded response HTML
+      function onIframeLoad(){
+        if(finished) return;
+        // If we've reached load event but haven't received postMessage, assume server responded.
+        // We'll attempt to treat it as success but still keep conservative messaging.
+        finished = true;
+        cleanup();
+        setBusy(false);
+
+        // optimistic success - server likely returned OK (we logged that already)
+        showResult('Your message has likely been sent. If you do not receive a reply, please email ranatejas137@gmail.com', 'success');
+        form.reset();
+        try { if(typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId); else if(typeof grecaptcha !== 'undefined') grecaptcha.reset(); } catch(e){}
+      }
+
+      // add listeners (add before submit)
+      window.addEventListener('message', onIframeMessage, false);
+      iframe.addEventListener('load', onIframeLoad, false);
+
+      // safety timeout (clears spinner even if nothing arrives)
+      timeoutId = setTimeout(function(){
+        if(finished) return;
+        finished = true;
+        cleanup();
+        setBusy(false);
+        showResult('Message processing took too long. If you did not receive a reply, kindly email ranatejas137@gmail.com', 'warn');
+      }, 15000); // 15 seconds fallback
+
+      // set busy & submit
+      setBusy(true);
+      try {
+        form.submit();
+      } catch(e) {
+        cleanup();
+        setBusy(false);
+        showResult('Unexpected error submitting the form. Please email ranatejas137@gmail.com', 'error');
+      }
+    });
+
+
+      // get recaptcha token
+      var token = (typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null)
+        ? grecaptcha.getResponse(recaptchaWidgetId)
+        : (typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '');
+
+      if(!token){
+        showResult('Please complete the reCAPTCHA challenge.', 'error');
+        return;
+      }
+
       // ensure endpoint present
       if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.length < 8){
         showResult('Submission endpoint not configured. Please email directly to ranatejas137@gmail.com', 'error');
