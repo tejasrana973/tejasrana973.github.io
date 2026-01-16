@@ -356,7 +356,7 @@
         setBusy(false);
 
         // optimistic success - server likely returned OK (we logged that already)
-        showResult('Your message has likely been sent. If you do not receive a reply, please email ranatejas137@gmail.com', 'success');
+        showResult('Thanks for getting in touch! Your message was likely sent. If you don’t receive a reply, please follow up by emailing me directly at ranatejas137@gmail.com.', 'success');
         form.reset();
         try { if(typeof grecaptcha !== 'undefined' && recaptchaWidgetId !== null) grecaptcha.reset(recaptchaWidgetId); else if(typeof grecaptcha !== 'undefined') grecaptcha.reset(); } catch(e){}
       }
